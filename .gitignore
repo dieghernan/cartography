@@ -11,6 +11,8 @@ doc
 # produced vignettes & R code
 vignettes/*.html
 vignettes/*.R
+src-i386
+src-x64
 # vignettes/*.pdf
 .Rproj.user
 inst/doc
