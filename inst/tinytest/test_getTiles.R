@@ -18,3 +18,48 @@ if(home){
   expect_silent(tilesLayer(x, add = FALSE))
   expect_silent(tilesLayer(x, add = TRUE))
 }
+
+# Tracking providers for regular check
+mtq <- st_read(system.file("gpkg/mtq.gpkg", package="cartography"), quiet = TRUE)
+
+allprovs = c('CartoDB', 'CartoDB.DarkMatter','CartoDB.DarkMatterNoLabels',
+           'CartoDB.DarkMatterOnlyLabels','CartoDB.Positron' ,'CartoDB.PositronNoLabels',
+           'CartoDB.PositronOnlyLabels','CartoDB.Voyager','CartoDB.VoyagerLabelsUnder',
+           'CartoDB.VoyagerNoLabels','CartoDB.VoyagerOnlyLabels',
+           'Esri','Esri.DeLorme','Esri.NatGeoWorldMap','Esri.OceanBasemap',
+           'Esri.WorldGrayCanvas','Esri.WorldImagery','Esri.WorldShadedRelief',
+           'Esri.WorldStreetMap','Esri.WorldTerrain','Esri.WorldTopoMap',
+           'HikeBike' ,'HikeBike.HikeBike',
+           'Hydda','Hydda.Base','Hydda.Full','Hydda.RoadsAndLabels',
+           'OpenMapSurfer','OpenMapSurfer.AdminBounds','OpenMapSurfer.ElementsAtRisk',
+           'OpenMapSurfer.Hybrid','OpenMapSurfer.Roads',
+           'OpenStreetMap' ,'OpenStreetMap.DE','OpenStreetMap.France',
+           'OpenStreetMap.HOT' ,'OpenStreetMap.MapnikBW' ,
+           'OpenTopoMap' ,
+           'Stamen' ,'Stamen.Terrain','Stamen.TerrainBackground','Stamen.TerrainLabels',
+           'Stamen.Toner','Stamen.TonerBackground','Stamen.TonerHybrid',
+           'Stamen.TonerLabels','Stamen.TonerLines','Stamen.TonerLite','Stamen.Watercolor' ,
+           'Wikimedia'
+           )
+
+
+for (i in 1:length(allprovs)) {
+  expect_true(methods::is(getTiles(x=mtq, zoom=3, type = allprovs[i]), "RasterBrick"))
+}
+
+tfapi = c(
+  'Thunderforest',
+  'Thunderforest.Landscape',
+  'Thunderforest.MobileAtlas',
+  'Thunderforest.Neighbourhood',
+  'Thunderforest.OpenCycleMap',
+  'Thunderforest.Outdoors',
+  'Thunderforest.Pioneer',
+  'Thunderforest.SpinalMap',
+  'Thunderforest.Transport',
+  'Thunderforest.TransportDark'
+)
+
+for (i in 1:length(tfapi)) {
+  expect_true(methods::is(getTiles(x=mtq, zoom=3, type = tfapi[i], apikey = "98a397435a0b4f6b96fbf2781579e06e"), "RasterBrick"))
+}
