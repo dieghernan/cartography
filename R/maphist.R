@@ -18,7 +18,7 @@ var="area"
 
 values<-st_drop_geometry(x)
 values<-as.double(values[,var])
-bks <- getBreaks(values, method = "quantile", nclass=15)
+bks <- getBreaks(values, method = "quantile", nclass=7)
 cols <- carto.pal(pal1 = "wine.pal", length(bks)-1)
 df<-data.frame(values)
 
@@ -38,3 +38,6 @@ hist(x=values, breaks=hbreaks,col = vcol$col,
      axes=FALSE,xlab="", ylab = "", main = "", border = NA)
 axis(1, line=0.01, pos=NA, col=NA, col.ticks = "black")
 axis(2, line=0.01, tck=1, col=NA, col.ticks="grey95", lwd.ticks="1", lwd=0.1, lty=3)
+
+
+choroLayer(x,var = var, breaks = bks, col=cols)
