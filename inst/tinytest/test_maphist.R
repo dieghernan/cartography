@@ -15,8 +15,9 @@ expect_silent(maphist(s, col=colors(),
                       hist.width = 0.1,
                       hist.height = 0.1,
                        pos=centr,
-                      frame=TRUE),)
+                      frame=TRUE))
+expect_silent(maphist(s,pos="nada"))
 
-              
+
 
           
