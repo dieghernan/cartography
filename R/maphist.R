@@ -9,6 +9,8 @@
 #' "bottomleftextra", "left" or a vector of two coordinates in map units 
 #' (c(x, y)).
 #' @param hist.width,hist.height width and height of the histogram, in normalized device coordinates (NDC). See Details. 
+#' @param title.txt title of the legend.
+#' @param title.cex size of the legend title.
 #' @param axes whether to add a horizontal (\code{"h"}), vertical (\code{"v"}) or both (\code{TRUE}) axes.
 #' @param axes.cex size of the values in the axes.
 #' @param frame whether to add a frame to the legend (\code{TRUE}) or not (\code{FALSE}).
@@ -31,6 +33,7 @@
 #' @export
 maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
                     col = NULL, pos = "topleft", hist.width = .15, hist.height = .3,
+                    title.txt=NULL, title.cex = 0.8,
                     axes = TRUE, axes.cex = 0.6, frame = FALSE) {
  
   v <- as.vector(na.omit(v))
@@ -92,18 +95,18 @@ maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
               grconvertY(c(yref - delta1, yref + legend_ysize + delta1 * 2), "user", "ndc"))
   
   par(new = TRUE, mgp = c(0, 0, 0), mar = c(1, 1, 1, 1),
-    fig = histfig, cex.axis = axes.cex)
+    fig = histfig, cex.axis = axes.cex, cex.main = title.cex)
   
   hist(x = v, breaks = hbreaks, col = hist$colMap,
     axes = FALSE, xlab = "", ylab = "",
-    main = "", border = hist$colMap)
+    main = title.txt, border = hist$colMap)
   
   #Axes control
   if (axes %in% c(TRUE,"h")){
     axis(1, line = 0.001, pos = NA, col = NA, col.ticks = "grey20", lwd.ticks = 0)
     }
   if (axes %in% c(TRUE,"v")){
-    axis(2, line = 0.01, tck = 1, col = NA, col.ticks = "grey20", lwd.ticks = "1", lwd = 0.1, lty = 3)
+    axis(2, line = 0.01, tck = 1, las= 2, col = NA, col.ticks = "grey20", lwd.ticks = "1", lwd = 0.1, lty = 3)
     }
   par(opar)
   }

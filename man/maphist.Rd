@@ -13,6 +13,8 @@ maphist(
   pos = "topleft",
   hist.width = 0.15,
   hist.height = 0.3,
+  title.txt = NULL,
+  title.cex = 0.8,
   axes = TRUE,
   axes.cex = 0.6,
   frame = FALSE
@@ -31,6 +33,10 @@ maphist(
 (c(x, y)).}
 
 \item{hist.width, hist.height}{width and height of the histogram, in normalized device coordinates (NDC). See Details.}
+
+\item{title.txt}{title of the legend.}
+
+\item{title.cex}{size of the legend title.}
 
 \item{axes}{whether to add a horizontal (\code{"h"}), vertical (\code{"v"}) or both (\code{TRUE}) axes.}
 
