@@ -58,8 +58,8 @@ maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
   delta2 <- delta1 / 2
   
   # variables internes
-  hist.width <- max(0.01, min(0.99, hist.width))
-  hist.height <- max(0.01, min(0.99, hist.height))
+  hist.width <- max(0.05, min(0.95, hist.width))
+  hist.height <- max(0.05, min(0.95, hist.height))
   
   legend_xsize <- (x2 - x1) * hist.width
   legend_ysize <- (y2 - y1) * hist.height
