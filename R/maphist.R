@@ -106,7 +106,8 @@ maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
     axis(1, line = 0.001, pos = NA, col = NA, col.ticks = "grey20", lwd.ticks = 0)
     }
   if (axes %in% c(TRUE,"v")){
-    axis(2, line = 0.01, tck = 1, las= 2, col = NA, col.ticks = "grey20", lwd.ticks = "1", lwd = 0.1, lty = 3)
+    vlabs <- unique(as.integer(axis(2,lwd=0,labels = FALSE)))
+    axis(2, at=vlabs, line = 0.01, tck = 1, las= 2, col = NA, col.ticks = "grey20", lwd.ticks = "1", lwd = 0.1, lty = 3)
     }
   par(opar)
   }
