@@ -25,6 +25,7 @@
 #' @param symbol type of symbol in the legend 'line' or 'box'
 #' @param border color of the box borders
 #' @param horiz layout of legend, TRUE for horizontal layout 
+#' @param hist a vector of numeric values to plot on a histogram or \code{FALSE}.
 #' @export
 #' @examples
 #' library(sf)
@@ -58,7 +59,8 @@ legendChoro <- function(pos = "topleft",
                         nodata.txt = "No data", 
                         nodata.col = "white",
                         frame=FALSE,symbol="box", 
-                        border = "black", horiz = FALSE){
+                        border = "black", horiz = FALSE,
+                        hist = FALSE){
   if (horiz && symbol=="box"){
     legendChoroHoriz(pos = pos, title.txt = title.txt, title.cex = title.cex,
                      values.cex = values.cex, breaks = breaks, col = col, cex = cex,
@@ -90,6 +92,13 @@ legendChoro <- function(pos = "topleft",
       breaks <- as.numeric(round(breaks, values.rnd))
     }
     
+    #Control, if breaks as char no hist
+    if(is.character(breaks)){
+      hist <- FALSE
+    } else {
+      hist <- as.vector(na.omit(hist))
+    }
+    
     if (nodata == FALSE){nodata.txt <- NULL}
     longval <- max(strwidth(c(breaks, nodata.txt), cex = values.cex))
     legend_xsize <- max(width + longval,
@@ -98,6 +107,15 @@ legendChoro <- function(pos = "topleft",
     
     # legende_size increase if no.data
     if (nodata == TRUE){legend_ysize <- legend_ysize + height + delta2 }
+    
+    # legende_ysize increase if hist
+    if (length(hist) > 2){
+      remain <- y2-(y1+3*delta1)-legend_ysize
+      gaphist <- max(0,min(remain,
+                           6*height+ delta2)) #Try the height of 6 boxes
+      if(gaphist==0){hist <- FALSE}
+      legend_ysize <- legend_ysize + gaphist
+    }
     
     # Get legend position
     legcoord <- legpos(pos = pos, x1 = x1, x2 = x2, y1 = y1, y2 = y2,
@@ -111,6 +129,20 @@ legendChoro <- function(pos = "topleft",
     if (frame==TRUE){
       rect(xref - delta1, yref - delta1, xref + legend_xsize + delta1 * 2,
            yref + legend_ysize + delta1 * 2, border = "black",  col="white")
+    }
+    
+    # Plot histogram
+    if (length(hist) > 2) {
+      hist.width <- (legend_xsize + delta1 * 3) / (x2 - x1)
+      hist.height <- (gaphist + 1.5 * delta1) / (y2 - y1)
+      maphist(v = hist,breaks = breaks,
+              col = col,
+              pos = c(xref - delta1, yref - delta1),
+              axes = "v",
+              hist.width = hist.width,
+              hist.height = hist.height
+      )
+      yref <- yref +  gaphist
     }
     
     # box display

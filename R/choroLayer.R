@@ -34,6 +34,7 @@
 #' @param legend.border color of boxes borders in the legend.
 #' @param legend.horiz whether to display the legend horizontally (TRUE) or
 #' not (FALSE).
+#' @param legend.hist wheter to display an histogram (TRUE) or not (FALSE).
 #' @param colNA no data color. 
 #' @param add whether to add the layer to an existing plot (TRUE) or 
 #' not (FALSE).
@@ -87,6 +88,7 @@ choroLayer <- function(x, spdf, df, spdfid = NULL, dfid = NULL, var,
                        legend.frame = FALSE,
                        legend.border = "black",
                        legend.horiz = FALSE,
+                       legend.hist = FALSE,
                        add = FALSE){
   
   if (missing(x)){
@@ -113,6 +115,10 @@ choroLayer <- function(x, spdf, df, spdfid = NULL, dfid = NULL, var,
          add = add)
   }
   
+  if (legend.hist == TRUE){
+    legend.hist <- as.vector(na.omit(x[[var]]))
+  }
+  
   legendChoro(pos = legend.pos, 
               title.txt = legend.title.txt,
               title.cex = legend.title.cex,
@@ -125,7 +131,8 @@ choroLayer <- function(x, spdf, df, spdfid = NULL, dfid = NULL, var,
               nodata = nodata, 
               nodata.txt = legend.nodata, 
               border = legend.border, 
-              horiz = legend.horiz)
+              horiz = legend.horiz,
+              hist = legend.hist)
   
   
 }
