@@ -13,6 +13,7 @@
 #' @param title.cex size of the legend title.
 #' @param axes whether to add a horizontal (\code{"h"}), vertical (\code{"v"}) or both (\code{TRUE}) axes.
 #' @param axes.cex size of the values in the axes.
+#' @author dieghernan, \url{https://github.com/dieghernan/}
 #' @param frame whether to add a frame to the legend (\code{TRUE}) or not (\code{FALSE}).
 #' @details \code{hist.width} and \code{hist.height} are defined in NDC, meaning that
 #' the height and width are percentages of the overall dimensions of the device plot. Default parameters produce
@@ -54,12 +55,12 @@ maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
   y2 <- par()$usr[4]
   
   # offsets
-  delta1 <- xinch(0.15)
-  delta2 <- delta1 / 2
+  delta1 <- xinch(0.01)
+  delta2 <- xinch(0.01)
   
   # variables internes
-  hist.width <- max(0.05, min(0.95, hist.width))
-  hist.height <- max(0.05, min(0.95, hist.height))
+  hist.width <- max(0, min(1, hist.width))
+  hist.height <- max(0, min(1, hist.height))
   
   legend_xsize <- (x2 - x1) * hist.width
   legend_ysize <- (y2 - y1) * hist.height
@@ -93,7 +94,7 @@ maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
   #Setting fig params
   histfig <- c(grconvertX(c(xref - delta1, xref + legend_xsize + delta1 * 2), "user", "ndc"),
               grconvertY(c(yref - delta1, yref + legend_ysize + delta1 * 2), "user", "ndc"))
-  
+  histfig <- pmin(0.99,pmax(0.01,histfig))
   par(new = TRUE, mgp = c(0, 0, 0), mar = c(1, 1, 1, 1),
     fig = histfig, cex.axis = axes.cex, cex.main = title.cex)
   
