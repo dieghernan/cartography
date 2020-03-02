@@ -27,6 +27,7 @@ choroLayer(
   legend.frame = FALSE,
   legend.border = "black",
   legend.horiz = FALSE,
+  legend.hist = FALSE,
   add = FALSE
 )
 }
@@ -86,6 +87,8 @@ not (FALSE).}
 
 \item{legend.horiz}{whether to display the legend horizontally (TRUE) or
 not (FALSE).}
+
+\item{legend.hist}{wheter to display an histogram (TRUE) or not (FALSE).}
 
 \item{add}{whether to add the layer to an existing plot (TRUE) or 
 not (FALSE).}

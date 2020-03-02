@@ -67,3 +67,6 @@ maphist(v = mtq$POPDENS)
 \seealso{
 \link{getBreaks}, \link{choroLayer}, \link{legendChoro}.
 }
+\author{
+dieghernan, \url{https://github.com/dieghernan/}
+}

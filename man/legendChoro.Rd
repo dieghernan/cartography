@@ -19,7 +19,8 @@ legendChoro(
   frame = FALSE,
   symbol = "box",
   border = "black",
-  horiz = FALSE
+  horiz = FALSE,
+  hist = FALSE
 )
 }
 \arguments{
@@ -61,6 +62,8 @@ not (FALSE).}
 \item{border}{color of the box borders}
 
 \item{horiz}{layout of legend, TRUE for horizontal layout}
+
+\item{hist}{a vector of numeric values to plot on a histogram or \code{FALSE}.}
 }
 \description{
 Plot legend for choropleth maps.
