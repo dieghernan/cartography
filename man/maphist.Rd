@@ -11,8 +11,8 @@ maphist(
   nclass = NULL,
   col = NULL,
   pos = "topleft",
-  hist.width = 0.15,
-  hist.height = 0.3,
+  hist.width = 0.25,
+  hist.height = 0.35,
   title.txt = NULL,
   title.cex = 0.8,
   axes = TRUE,
@@ -50,7 +50,7 @@ Plot an histogram over a map.
 \details{
 \code{hist.width} and \code{hist.height} are defined in NDC, meaning that
 the height and width are percentages of the overall dimensions of the device plot. Default parameters produce
-a histogram that covers 15\% (on width) and 30\% (on height) of the overall device plot.
+a histogram that covers 25\% (on width) and 35\% (on height) of the overall device plot.
 }
 \examples{
 library(sf)

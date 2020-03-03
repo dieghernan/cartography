@@ -109,12 +109,13 @@ maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
   labsx <- max(strheight(as.character(bins),
                          cex = axes.cex, units = "inches"))
   if (isTRUE(axes) || axes == "h") {
-    bottinc <- max(0.2,labsx*1.15)
+    bottinc <- labsx +0.05
   } else {
     bottinc <- 0.05
   }
   labsy <- max(strwidth(as.character(vlabs),
-                        cex = axes.cex, units = "inches"))
+                         cex = axes.cex, units = "inches"))
+  
   if (isTRUE(axes) || axes == "v") {
     leftinc <- labsy + 0.05
   } else {
@@ -133,12 +134,12 @@ maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
   #Axes control
   if (isTRUE(axes) || axes == "h"){
     axis(1, 
-         line = 0+max(1.25*labsx-0.2,0)*3, 
+         line = -.9+labsx/0.2, 
          col = NA, col.ticks = "grey20", lwd.ticks = 0)
     }
   if (isTRUE(axes) || axes == "v"){
     axis(2, at=vlabs[-1], 
-         line = 0.01, tck = 1,
+         line = 0, tck = 1,
          las= 2, col = NA, col.ticks = "grey20",
          lwd.ticks = "1", lwd = 0.1, lty = 3)
     }

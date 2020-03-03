@@ -112,7 +112,7 @@ legendChoro <- function(pos = "topleft",
     if (length(hist) > 2){
       remain <- y2-(y1+3*delta1)-legend_ysize
       gaphist <- max(0,min(remain,
-                           6*height+ delta2)) #Try the height of 6 boxes
+                           6*height + delta2)) #Try the height of 6 boxes
       if(gaphist==0){hist <- FALSE}
       legend_ysize <- legend_ysize + gaphist
     }
@@ -134,11 +134,12 @@ legendChoro <- function(pos = "topleft",
     # Plot histogram
     if (length(hist) > 2) {
       hist.width <- (legend_xsize + delta1 * 3) / (x2 - x1)
-      hist.height <- (gaphist + 1.5 * delta1) / (y2 - y1)
+      hist.height <- (gaphist + delta2/2) / (y2 - y1)
       maphist(v = hist,breaks = breaks,
               col = col,
-              pos = c(xref - delta1, yref - delta1),
+              pos = c(xref - delta1, yref - delta2),
               axes = "v",
+              axes.cex = values.cex,
               hist.width = hist.width,
               hist.height = hist.height
       )
