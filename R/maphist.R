@@ -17,7 +17,7 @@
 #' @param frame whether to add a frame to the legend (\code{TRUE}) or not (\code{FALSE}).
 #' @details \code{hist.width} and \code{hist.height} are defined in NDC, meaning that
 #' the height and width are percentages of the overall dimensions of the device plot. Default parameters produce
-#' a histogram that covers 15\% (on width) and 30\% (on height) of the overall device plot.
+#' a histogram that covers 25\% (on width) and 35\% (on height) of the overall device plot.
 #' @seealso \link{getBreaks}, \link{choroLayer}, \link{legendChoro}.
 #' @importFrom graphics grconvertX grconvertY hist axis
 #' @examples 
@@ -33,7 +33,7 @@
 #' maphist(v = mtq$POPDENS)
 #' @export
 maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
-                    col = NULL, pos = "topleft", hist.width = .15, hist.height = .3,
+                    col = NULL, pos = "topleft", hist.width = .25, hist.height = .35,
                     title.txt=NULL, title.cex = 0.8,
                     axes = TRUE, axes.cex = 0.6, frame = FALSE) {
  
@@ -88,6 +88,10 @@ maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
   # get the colors and breaks for bins
   hist <-  choro(var = bins, distr = intervs, col = col)
   
+  #vscale
+  vlabs <- table(cut(v, bins, labels = FALSE))
+  vlabs <- as.integer(pretty(vlabs))
+  
   #Store initial parasm
   opar <- par(no.readonly = TRUE)
   
@@ -95,20 +99,48 @@ maphist <- function(v,breaks = NULL, method = "quantile", nclass = NULL,
   histfig <- c(grconvertX(c(xref - delta1, xref + legend_xsize + delta1 * 2), "user", "ndc"),
               grconvertY(c(yref - delta1, yref + legend_ysize + delta1 * 2), "user", "ndc"))
   histfig <- pmin(0.99,pmax(0.01,histfig))
-  par(new = TRUE, mgp = c(0, 0, 0), mar = c(1, 1, 1, 1),
-    fig = histfig, cex.axis = axes.cex, cex.main = title.cex)
+  
+  #Control internal margins
+  if (is.null(title.txt) || title.txt == "") {
+    topinch <- 0.05
+  } else {
+    topinch <- strheight(title.txt, cex = title.cex, units = "inches") + 0.05
+  }
+  labsx <- max(strheight(as.character(bins),
+                         cex = axes.cex, units = "inches"))
+  if (isTRUE(axes) || axes == "h") {
+    bottinc <- max(0.2,labsx*1.15)
+  } else {
+    bottinc <- 0.05
+  }
+  labsy <- max(strwidth(as.character(vlabs),
+                        cex = axes.cex, units = "inches"))
+  if (isTRUE(axes) || axes == "v") {
+    leftinc <- labsy + 0.05
+  } else {
+    leftinc <- 0.05
+  }
+  
+  
+  par(new = TRUE, mgp = c(0, 0, 0), 
+      mai = c(bottinc, leftinc, topinch, 0.05), 
+      fig = histfig, cex.axis = axes.cex, cex.main = title.cex)
   
   hist(x = v, breaks = hbreaks, col = hist$colMap,
     axes = FALSE, xlab = "", ylab = "",
     main = title.txt, border = hist$colMap)
   
   #Axes control
-  if (axes %in% c(TRUE,"h")){
-    axis(1, line = 0.001, pos = NA, col = NA, col.ticks = "grey20", lwd.ticks = 0)
+  if (isTRUE(axes) || axes == "h"){
+    axis(1, 
+         line = 0+max(1.25*labsx-0.2,0)*3, 
+         col = NA, col.ticks = "grey20", lwd.ticks = 0)
     }
-  if (axes %in% c(TRUE,"v")){
-    vlabs <- unique(as.integer(axis(2,lwd=0,labels = FALSE)))
-    axis(2, at=vlabs, line = 0.01, tck = 1, las= 2, col = NA, col.ticks = "grey20", lwd.ticks = "1", lwd = 0.1, lty = 3)
+  if (isTRUE(axes) || axes == "v"){
+    axis(2, at=vlabs[-1], 
+         line = 0.01, tck = 1,
+         las= 2, col = NA, col.ticks = "grey20",
+         lwd.ticks = "1", lwd = 0.1, lty = 3)
     }
   par(opar)
   }
