@@ -1,15 +1,15 @@
 #' @title Pretty format for labels
 #' @description Convert numeric arrays into formatted strings.
-#' @name legendFormat
+#' @name getFormatNums
 #' @param v a vector of numeric values.
 #' @param thousands thousands separator.
 #' @param decimals decimals separator.
 #' @param round desired number of digits after the decimal separator.
-#' @param preffix,suffix strings to be pasted before of after the number, see Details.
+#' @param prefix,suffix strings to be pasted before of after the number, see Details.
 #' @param align alignment of the final string, possible values are "left" or "right".
 #' @param leadzero logical, convert leading zeros to \code{" ."} for values lower than 1 or -1.
 #' @param replace.zero replace zero values for this parameter. See Details.
-#' @details If \code{preffix} contains \code{"\%"} the values are converted to percentages. \cr\cr
+#' @details If \code{suffix} contains \code{"\%"} the values are converted to percentages. \cr\cr
 #' \code{NA} values of \code{v} are converted to \code{"NA"}. \cr\cr
 #' If \code{replace.zero} is not \code{NULL}, exact zeroes would be replaced for this value.
 #' @return A character vector containing the formatted values.
@@ -21,7 +21,7 @@
 #' mtq$POPDENS <- 1e6 * mtq$POP / st_area(x = mtq)
 #' brks <- getBreaks(mtq$POPDENS, 6)
 #' cols <- carto.pal("red.pal", 6)
-#' labs <- legendFormat(brks,
+#' labs <- getFormatNums(brks,
 #'                      thousands = ",",
 #'                      suffix = " in/km2",
 #'                      align = "right")
@@ -42,7 +42,7 @@
 #' 
 #' brks <- seq(0, .3, .05)
 #' cols = carto.pal("sand.pal", 6)
-#' labs <- legendFormat(brks,
+#' labs <- getFormatNums(brks,
 #'                      round = 2,
 #'                      leadzero = FALSE,
 #'                      replace.zero = "0000")
@@ -65,7 +65,7 @@
 #' 
 #' brks <- getBreaks(mtq$AREA, method = "q6")
 #' cols = carto.pal("orange.pal", 6)
-#' labs <- legendFormat(brks, suffix = "%", round = 1)
+#' labs <- getFormatNums(brks, suffix = "%", round = 1, prefix = "<")
 #' choroLayer(mtq,
 #'            var = "AREA",
 #'            legend.pos = "n",
@@ -79,11 +79,11 @@
 #'   nodata = FALSE
 #' )
 #' @export
-legendFormat <- function(v,
+getFormatNums <- function(v,
                          thousands = "",
                          decimals = getOption("OutDec"),
                          round = 0,
-                         preffix = "",
+                         prefix = "",
                          suffix = "",
                          align = "left",
                          leadzero = TRUE,
@@ -113,7 +113,7 @@ legendFormat <- function(v,
                          labs[totrail])
   }
   
-  labs <- paste0(preffix, labs, suffix)
+  labs <- paste0(prefix, labs, suffix)
   labs[is.na(v)] <- "NA"
   if (!is.null(replace.zero)) {
     labs[v == 0] <- replace.zero
