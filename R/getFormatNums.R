@@ -106,7 +106,7 @@ getFormatNums <- function(v,
     trim = TRUE
   )
   
-  if (!leadzero) {
+  if (isFALSE(leadzero)) {
     totrail <- abs(v) < 1
     labs[totrail] <- sub(paste0("0", decimals),
                          paste0(" ", decimals),
