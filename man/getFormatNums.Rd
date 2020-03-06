@@ -29,7 +29,7 @@ getFormatNums(
 
 \item{align}{alignment of the final string, possible values are "left" or "right".}
 
-\item{leadzero}{logical, convert leading zeros to \code{" ."} for values lower than 1 or -1.}
+\item{leadzero}{logical, convert leading zeros to \code{" ."} for values in (-1,1).}
 
 \item{replace.zero}{replace zero values for this parameter. See Details.}
 }

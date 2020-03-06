@@ -7,7 +7,7 @@
 #' @param round desired number of digits after the decimal separator.
 #' @param prefix,suffix strings to be pasted before of after the number, see Details.
 #' @param align alignment of the final string, possible values are "left" or "right".
-#' @param leadzero logical, convert leading zeros to \code{" ."} for values lower than 1 or -1.
+#' @param leadzero logical, convert leading zeros to \code{" ."} for values in (-1,1).
 #' @param replace.zero replace zero values for this parameter. See Details.
 #' @details If \code{suffix} contains \code{"\%"} the values are converted to percentages. \cr\cr
 #' \code{NA} values of \code{v} are converted to \code{"NA"}. \cr\cr
