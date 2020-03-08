@@ -4,7 +4,7 @@
 #' @param v a vector of numeric values.
 #' @param thousands thousands separator.
 #' @param decimals decimals separator.
-#' @param round desired number of digits after the decimal separator.
+#' @param values.rnd desired number of digits after the decimal separator.
 #' @param prefix,suffix strings to be pasted before of after the number, see Details.
 #' @param align alignment of the final string, possible values are "left" or "right".
 #' @param leadzero logical, convert leading zeros to \code{" ."} for values in (-1,1).
@@ -43,7 +43,7 @@
 #' brks <- seq(0, .3, .05)
 #' cols = carto.pal("sand.pal", 6)
 #' labs <- getFormatNums(brks,
-#'                      round = 2,
+#'                      values.rnd = 2,
 #'                      leadzero = FALSE,
 #'                      replace.zero = "0000")
 #' 
@@ -65,7 +65,7 @@
 #' 
 #' brks <- getBreaks(mtq$AREA, method = "q6")
 #' cols = carto.pal("orange.pal", 6)
-#' labs <- getFormatNums(brks, suffix = "%", round = 1, prefix = "<")
+#' labs <- getFormatNums(brks, suffix = "%", values.rnd = 1, prefix = "<")
 #' choroLayer(mtq,
 #'            var = "AREA",
 #'            legend.pos = "n",
@@ -82,7 +82,7 @@
 getFormatNums <- function(v,
                          thousands = "",
                          decimals = getOption("OutDec"),
-                         round = 0,
+                         values.rnd = 0,
                          prefix = "",
                          suffix = "",
                          align = "left",
@@ -90,13 +90,13 @@ getFormatNums <- function(v,
                          replace.zero = NULL) {
   v <- as.vector(v)
   if (is.character(v)) {
-    stop("Trying to format characters??")
+    return(v)
   }
   
   if (length(grep("%", suffix)) > 0) {
     v <- 100 * v
   }
-  v <- round(v, round)
+  v <- round(v, values.rnd)
   
   labs <- format(
     x = v,

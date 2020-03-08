@@ -8,7 +8,7 @@ getFormatNums(
   v,
   thousands = "",
   decimals = getOption("OutDec"),
-  round = 0,
+  values.rnd = 0,
   prefix = "",
   suffix = "",
   align = "left",
@@ -23,7 +23,7 @@ getFormatNums(
 
 \item{decimals}{decimals separator.}
 
-\item{round}{desired number of digits after the decimal separator.}
+\item{values.rnd}{desired number of digits after the decimal separator.}
 
 \item{prefix, suffix}{strings to be pasted before of after the number, see Details.}
 
@@ -73,7 +73,7 @@ mtq$PORCPOP <- mtq$POP / sum(mtq$POP)
 brks <- seq(0, .3, .05)
 cols = carto.pal("sand.pal", 6)
 labs <- getFormatNums(brks,
-                     round = 2,
+                     values.rnd = 2,
                      leadzero = FALSE,
                      replace.zero = "0000")
 
@@ -95,7 +95,7 @@ mtq$AREA <- (st_area(mtq) / sum(st_area(mtq)))
 
 brks <- getBreaks(mtq$AREA, method = "q6")
 cols = carto.pal("orange.pal", 6)
-labs <- getFormatNums(brks, suffix = "\%", round = 1, prefix = "<")
+labs <- getFormatNums(brks, suffix = "\%", values.rnd = 1, prefix = "<")
 choroLayer(mtq,
            var = "AREA",
            legend.pos = "n",
