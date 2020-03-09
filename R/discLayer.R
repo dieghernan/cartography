@@ -32,6 +32,7 @@
 #' not (FALSE).
 #' @param add whether to add the layer to an existing plot (TRUE) or 
 #' not (FALSE).
+#' @param ... optional args of \code{\link{getFormatNums}} for formatting the labels.
 #' @param spdf defunct.
 #' @param spdfid1 defunct.
 #' @param spdfid2 defunct.
@@ -68,7 +69,7 @@ discLayer <- function(x, df, dfid = NULL, var,
                       legend.values.cex = 0.6, 
                       legend.values.rnd = 2,
                       legend.frame=FALSE,
-                      add = TRUE, spdf, spdfid1, spdfid2){
+                      add = TRUE, ..., spdf, spdfid1, spdfid2){
   
   if(sum(c(missing(spdf), missing(spdfid1), missing(spdfid2))) != 3){
     stop("spdf, spdfid1 and spdfid2 are defunct arguments; last used in version 1.4.2.",
@@ -117,7 +118,7 @@ discLayer <- function(x, df, dfid = NULL, var,
                   values.cex = legend.values.cex, 
                   breaks = distr, lwd = sizes, 
                   col = col, values.rnd = legend.values.rnd,
-                  frame = legend.frame)
+                  frame = legend.frame, ...)
   
   invisible(x.out)
 }

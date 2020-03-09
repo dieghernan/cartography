@@ -14,7 +14,8 @@ legendGradLines(
   lwd,
   col,
   values.rnd = 2,
-  frame = FALSE
+  frame = FALSE,
+  ...
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ the legend.}
 
 \item{frame}{whether to add a frame to the legend (TRUE) or 
 not (FALSE).}
+
+\item{...}{optional args of \code{\link{getFormatNums}} for formatting the labels.}
 }
 \description{
 Plot legend for graduated size lines maps.

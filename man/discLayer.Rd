@@ -23,6 +23,7 @@ discLayer(
   legend.values.rnd = 2,
   legend.frame = FALSE,
   add = TRUE,
+  ...,
   spdf,
   spdfid1,
   spdfid2
@@ -74,6 +75,8 @@ not (FALSE).}
 
 \item{add}{whether to add the layer to an existing plot (TRUE) or 
 not (FALSE).}
+
+\item{...}{optional args of \code{\link{getFormatNums}} for formatting the labels.}
 
 \item{spdf}{defunct.}
 

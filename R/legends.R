@@ -809,6 +809,7 @@ legendPropLines<- function(pos = "topleft", title.txt = "Title of the legend",
 #' @param cex size of the legend. 2 means two times bigger.
 #' @param frame whether to add a frame to the legend (TRUE) or 
 #' not (FALSE).
+#' @param ... optional args of \code{\link{getFormatNums}} for formatting the labels.
 #' @export
 #' @examples 
 #' library(sf)
@@ -823,7 +824,7 @@ legendPropLines<- function(pos = "topleft", title.txt = "Title of the legend",
 #'                 col ="blue", values.rnd =2)
 legendGradLines <- function(pos = "topleft", title.txt = "Title of the legend", 
                             title.cex = 0.8, cex = 1, values.cex = 0.6, breaks, 
-                            lwd, col, values.rnd = 2,frame=FALSE){
+                            lwd, col, values.rnd = 2,frame=FALSE, ...){
   breaks <- abs(breaks)
   # exit for none
   positions <- c("bottomleft", "topleft", "topright", "bottomright",
@@ -845,13 +846,13 @@ legendGradLines <- function(pos = "topleft", title.txt = "Title of the legend",
   
   
   # Taille du bloc de legende
-  breaks <- as.numeric(round(breaks, values.rnd))
-  longVal <- breaks[strwidth(breaks, cex = values.cex) == 
-                      max(strwidth(breaks, cex = values.cex))][1]
+  labs <- getFormatNums(v = breaks,values.rnd = values.rnd, ...)
+  longVal <- labs[strwidth(labs, cex = values.cex) == 
+                      max(strwidth(labs, cex = values.cex))][1]
   
   legend_xsize <- max(width + strwidth(longVal, cex = values.cex), 
                       strwidth(title.txt,cex = title.cex) - delta2) - delta2
-  legend_ysize <- length(breaks) * height + (length(breaks)-2) * delta2 + 
+  legend_ysize <- length(labs) * height + (length(labs)-2) * delta2 + 
     strheight(title.txt, cex = title.cex)
   
   # Get legend position
@@ -869,7 +870,7 @@ legendGradLines <- function(pos = "topleft", title.txt = "Title of the legend",
   }
   
   # Affichage du bloc de legende
-  for (i in 0:(length(breaks)-2)){
+  for (i in 0:(length(labs)-2)){
     j <- i + 1
     segments(xref, 
              yref + height / 2 + i * height + i * delta2 + (height + delta2) / 2, 
@@ -877,16 +878,16 @@ legendGradLines <- function(pos = "topleft", title.txt = "Title of the legend",
              yref + i * height + i * delta2 + height / 2 + (height+delta2) / 2, 
              lwd = lwd[j], col = col, lend = 1)
     text(x = xref + width + delta2, 
-         y = yref + height / 2 + i * height + i * delta2, labels = breaks[j],
+         y = yref + height / 2 + i * height + i * delta2, labels = labs[j],
          adj = c(0,0.5), cex = values.cex)
   }
   
   text(x = xref + width + delta2 ,
        y = yref + height/2 + (i+1) * height + (i+1) * delta2, 
-       labels = breaks[j+1], adj = c(0,0.5), cex = values.cex)
+       labels = labs[j+1], adj = c(0,0.5), cex = values.cex)
   
   # Affichage du titre
-  text(x = xref, y = yref + length(breaks) * height + length(breaks) * delta2, 
+  text(x = xref, y = yref + length(labs) * height + length(labs) * delta2, 
        labels = title.txt, adj = c(0,0), cex = title.cex)
 }
 
