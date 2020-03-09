@@ -17,7 +17,8 @@ legendCirclesSymbols(
   col = "#E84923",
   frame = FALSE,
   values.rnd = 0,
-  style = "c"
+  style = "c",
+  ...
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ the legend.}
 
 \item{style}{either "c" or "e". The legend has two display 
 styles, "c" stands for compact and "e" for extended.}
+
+\item{...}{optional args of \code{\link{getFormatNums}} for formatting the labels.}
 }
 \description{
 Plot legend for proportional circles maps

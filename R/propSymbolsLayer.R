@@ -33,6 +33,7 @@
 #' not (FALSE).
 #' @param add whether to add the layer to an existing plot (TRUE) or 
 #' not (FALSE).
+#' @param ... optional args of \code{\link{getFormatNums}} for formatting the labels.
 #' @param breakval defunct.
 #' @param col2 defunct.
 #' @details  
@@ -70,7 +71,7 @@ propSymbolsLayer <- function(x, spdf, df, spdfid = NULL, dfid = NULL, var,
                              legend.style = "c", 
                              legend.frame = FALSE,
                              add = TRUE, 
-                             breakval = NULL, col2){
+                             breakval = NULL, col2, ...){
   if(!is.null(breakval)){
     stop("breakval and col2 are defunct arguments; last used in version 1.4.2.",
          call. = FALSE)
@@ -131,7 +132,7 @@ propSymbolsLayer <- function(x, spdf, df, spdfid = NULL, dfid = NULL, var,
                                 col = col, lwd = lwd,
                                 frame = legend.frame,
                                 values.rnd =  legend.values.rnd,
-                                style = legend.style)
+                                style = legend.style, ...)
          }, 
          square = {
            symbols(dots[, 1:2, drop = TRUE], squares = sizes, bg = mycols, 

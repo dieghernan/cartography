@@ -26,7 +26,8 @@ propSymbolsLayer(
   legend.frame = FALSE,
   add = TRUE,
   breakval = NULL,
-  col2
+  col2,
+  ...
 )
 }
 \arguments{
@@ -85,6 +86,8 @@ not (FALSE).}
 \item{breakval}{defunct.}
 
 \item{col2}{defunct.}
+
+\item{...}{optional args of \code{\link{getFormatNums}} for formatting the labels.}
 }
 \description{
 Plot a proportional symbols layer.

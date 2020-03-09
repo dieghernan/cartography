@@ -315,6 +315,7 @@ legendTypo <- function(pos = "topleft",
 #' not (FALSE).
 #' @param style either "c" or "e". The legend has two display 
 #' styles, "c" stands for compact and "e" for extended.
+#' @param ... optional args of \code{\link{getFormatNums}} for formatting the labels.
 #' @export
 #' @examples
 #' library(sf)
@@ -342,7 +343,7 @@ legendTypo <- function(pos = "topleft",
 legendCirclesSymbols<- function(pos = "topleft", title.txt = "Title of the legend", 
                                 title.cex = 0.8, cex = 1, border="black", lwd=1,
                                 values.cex = 0.6, var, inches, col="#E84923", 
-                                frame=FALSE, values.rnd=0, style ="c"){
+                                frame=FALSE, values.rnd=0, style ="c", ...){
   var <- abs(var)
   # exit for none
   positions <- c("bottomleft", "topleft", "topright", "bottomright",
@@ -373,9 +374,11 @@ legendCirclesSymbols<- function(pos = "topleft", title.txt = "Title of the legen
   size <- sort(size, decreasing = TRUE)
   var <- sort(var, decreasing = TRUE)
   
+  labs <- getFormatNums(v = var,values.rnd = values.rnd, ...)
+  
   # Legend width and height    
-  longVal <- var[strwidth(var,cex = values.cex) == 
-                   max(strwidth(var, cex = values.cex))][1]
+  longVal <- labs[strwidth(labs,cex = values.cex) == 
+                   max(strwidth(labs, cex = values.cex))][1]
   legend_xsize <- max(size[1] * 2 + strwidth(longVal, cex = values.cex),
                       strwidth(title.txt,cex = title.cex) - delta1)
   if(style == "c"){
@@ -409,7 +412,7 @@ legendCirclesSymbols<- function(pos = "topleft", title.txt = "Title of the legen
       segments(xref + size[1], yref + size[i] * 2, xref + size[1] * 2 + delta2,
                yref + size[i] * 2, col = border)
       text(x = xref + size[1] * 2 + delta1, y = yref + size[i] * 2, 
-           labels = var[i], adj = c(0,0.5), cex = values.cex)
+           labels = labs[i], adj = c(0,0.5), cex = values.cex)
     }
     text(x = xref ,y = yref + delta2 + size[1] * 2 + delta2, title.txt,
          adj = c(0,0), cex = title.cex)
@@ -421,7 +424,7 @@ legendCirclesSymbols<- function(pos = "topleft", title.txt = "Title of the legen
       symbols(x = xref + size[1], y = yref + size[i] + jump, circles = size[i],
               add = TRUE, bg = col, inches=FALSE, lwd=lwd, fg=border)
       text(xref + size[1] + size[i] + delta2 , y = yref + size[i] + jump,
-           labels = var[i], adj = c(0,0.5), cex = values.cex)
+           labels = labs[i], adj = c(0,0.5), cex = values.cex)
       jump <- jump + size[i] * 2 + delta2 / 2
     }
     text(x = xref, 
