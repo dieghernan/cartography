@@ -6,7 +6,7 @@
 \usage{
 getFormatNums(
   v,
-  thousands = "",
+  thousands = " ",
   decimals = getOption("OutDec"),
   values.rnd = 0,
   prefix = "",
@@ -19,7 +19,7 @@ getFormatNums(
 \arguments{
 \item{v}{a vector of numeric values.}
 
-\item{thousands}{thousands separator.}
+\item{thousands}{thousands separator. The default value is a whitespace (see Note).}
 
 \item{decimals}{decimals separator.}
 
@@ -43,6 +43,9 @@ Convert numeric arrays into formatted strings.
 If \code{suffix} contains \code{"\%"} the values are converted to percentages. \cr\cr
 \code{NA} values of \code{v} are converted to \code{"NA"}. \cr\cr
 If \code{replace.zero} is not \code{NULL}, exact zeroes would be replaced for this value.
+}
+\note{
+ISO 31-0 specifies a small space for separate thousands.
 }
 \examples{
 library(sf)

@@ -2,7 +2,7 @@
 #' @description Convert numeric arrays into formatted strings.
 #' @name getFormatNums
 #' @param v a vector of numeric values.
-#' @param thousands thousands separator.
+#' @param thousands thousands separator. The default value is a whitespace (see Note).
 #' @param decimals decimals separator.
 #' @param values.rnd desired number of digits after the decimal separator.
 #' @param prefix,suffix strings to be pasted before of after the number, see Details.
@@ -14,6 +14,7 @@
 #' If \code{replace.zero} is not \code{NULL}, exact zeroes would be replaced for this value.
 #' @return A character vector containing the formatted values.
 #' @author dieghernan, \url{https://github.com/dieghernan/}
+#' @note ISO 31-0 specifies a small space for separate thousands.
 #' @examples
 #' library(sf)
 #' mtq <- st_read(system.file("gpkg/mtq.gpkg", package = "cartography"))
@@ -80,7 +81,7 @@
 #' )
 #' @export
 getFormatNums <- function(v,
-                         thousands = "",
+                         thousands = " ",
                          decimals = getOption("OutDec"),
                          values.rnd = 0,
                          prefix = "",
