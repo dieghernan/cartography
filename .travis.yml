@@ -1,11 +1,6 @@
 language: r
-r:
-  - release
-  - devel
-  - oldrel
-
 sudo: required
-
+os: linux 
 dist: trusty
 
 before_install:
@@ -14,7 +9,24 @@ before_install:
   - sudo apt-get install --yes libudunits2-dev libproj-dev libgeos-dev libgdal-dev
   - sudo ldconfig
 
-
+jobs:
+  include:
+  - r: devel
+  - r: release
+    cache:
+      - packages
+  - r: oldrel
+    cache:
+      - packages
+  - r: release
+    os: osx
+    osx_image: xcode10.1
+    before_install:
+    - sudo tlmgr install inconsolata
+    - sw_vers
+    cache:
+      - packages
+      
 warnings_are_errors: true
 
 r_packages:
