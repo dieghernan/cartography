@@ -116,6 +116,8 @@
 		var url = url.replace("{r}","");
 		var url = url.replace("//","/");
 		var url = url.replace("/.",".");
+		var url = url.replace("http:/","http://");
+		var url = url.replace("https:/","https://");
 		var options = L.extend({}, prov.options || {});
 		delete options.providerName;
 		// replace {variant} in urls with the selected variant, since
@@ -154,6 +156,7 @@
 				delete options[option];
 			}
 		}
+		
 		row = document.createElement('tr');
 		row.innerHTML = '<td><code>' + name + '</code></td><td>q</td><td>"' + url2 + '"</td>';
 		document.getElementById('listprov').appendChild(row);
