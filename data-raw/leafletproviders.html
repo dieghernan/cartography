@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>leaflet-providers</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Load Leaflet -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+	<!-- Install leaflet-providers -->	
+	<script src="https://cdn.jsdelivr.net/npm/leaflet-providers@1.11.0/leaflet-providers.min.js"></script>
+</head>
+
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>provider</th>
+				<th>field</th>
+				<th>value</th>
+			</tr>
+		</thead>
+		<tbody id="listprov"> </tbody>
+	</table>
+	<script>
+	
+	function providerOpts(arg, options) {
+  var providers = providersLeaf;
+  var parts = arg.split('.');
+  var providerName = parts[0];
+  var variantName = parts[1];
+  if (!providers[providerName]) {
+    throw 'No such provider (' + providerName + ')';
+  }
+  var provider = {
+    url: providers[providerName].url,
+    options: providers[providerName].options
+  };
+  if (variantName) {
+    provider.options.providerName = providerName + '.' + variantName;
+  } else {
+    provider.options.providerName = providerName;
+  }
+  // overwrite values in provider from variant.
+  if (variantName && 'variants' in providers[providerName]) {
+    if (!(variantName in providers[providerName].variants)) {
+      throw 'No such variant of ' + providerName + ' (' + variantName + ')';
+    }
+    var variant = providers[providerName].variants[variantName];
+    //Guess WMS or WMTS
+    var finalurl = variant.url || provider.url;
+    //According to template Tiles uses {x} while WMS not.
+    var wmts = finalurl.includes("{x}");
+    var variantOptions;
+    if (typeof variant === 'string') {
+      // Depending on WMTS or Tiles
+      if (wmts) {
+        variantOptions = {
+          variant: variant
+        };
+      } else {
+        variantOptions = {
+          layers: variant
+        };
+      }
+    } else {
+      variantOptions = variant.options;
+    }
+    provider = {
+      url: variant.url || provider.url,
+      options: L.Util.extend({}, provider.options, variantOptions)
+    };
+  }
+  // replace attribution placeholders with their values from toplevel provider attribution,
+  // recursively
+  function attributionReplacer(attr) {
+    if (attr.indexOf('{attribution.') === -1) {
+      return attr;
+    }
+    return attr.replace(/\{attribution.(\w*)\}/g, function (match, attributionName) {
+      return attributionReplacer(providers[attributionName].options.attribution);
+    });
+  }
+  provider.options.attribution = attributionReplacer(provider.options.attribution);
+  // Compute final options combining provider options with any user overrides
+  var layerOpts = L.Util.extend({}, provider.options, options);
+  var providerend = {
+    url: provider.url,
+    options: layerOpts
+  };
+  return providerend;
+}
+	
+	providersLeaf = L.TileLayer.Provider.providers;
+	var allprovs = [];
+	for(var provider in providersLeaf) {
+		allprovs.push(provider);
+		if(providersLeaf[provider].variants) {
+			for(var variant in providersLeaf[provider].variants) {
+				allprovs.push(provider + '.' + variant);
+			}
+		}
+	}
+	
+	
+	
+	for(var provider in allprovs) {
+		var name = allprovs[provider];
+		var prov = providerOpts(name);
+		var layerName = name;
+		var url = prov.url;
+		var rawurl = url;
+		var url = url.replace("{apikey}","APIKEY");
+		var url = url.replace("{key}","APIKEY");
+		var url = url.replace("{accessToken}","APIKEY");
+		var url = url.replace("{r}","");
+		var url = url.replace("//","/");
+		var url = url.replace("/.",".");
+		var options = L.extend({}, prov.options || {});
+		delete options.providerName;
+		// replace {variant} in urls with the selected variant, since
+		// keeping it in the options map doesn't make sense for one layer
+		if(options.variant) {
+			url = url.replace('{variant}', options.variant);
+			delete options.variant;
+		}
+		if (options.subdomains){
+		
+		} else {
+		  options.subdomains = "NA"
+		}
+		row = document.createElement('tr');
+		row.innerHTML = '<td><code>' + name + '</code></td><td>src</td><td>"' + name + '"</td>';
+		
+		document.getElementById('listprov').appendChild(row);
+		for(var optionfinal in options) {
+			opt = optionfinal;
+			if(opt == "subdomains") {			
+				
+				row = document.createElement('tr');
+				row.innerHTML = '<td><code>' + name + '</code></td><td>sub</td><td>"' + options[optionfinal] + '"</td>';
+				document.getElementById('listprov').appendChild(row);
+			}
+		}
+		var url2 = url;
+		
+
+		
+		
+		for(var option in options) {
+			var templ = '{' + option + '}';
+			if(url2.includes(templ)) {
+				url2 = url2.replace(templ, options[option]);
+				delete options[option];
+			}
+		}
+		row = document.createElement('tr');
+		row.innerHTML = '<td><code>' + name + '</code></td><td>q</td><td>"' + url2 + '"</td>';
+		document.getElementById('listprov').appendChild(row);
+		
+		row = document.createElement('tr');
+		row.innerHTML = '<td><code>' + name + '</code></td><td>rawurl</td><td>"' + rawurl + '"</td>';
+		document.getElementById('listprov').appendChild(row);
+		
+		row = document.createElement('tr');
+		row.innerHTML = '<td><code>' + name + '</code></td><td>cit</td><td>"' + options["attribution"].replace(/(<([^>]+)>)/gi, "") + '"</td>';
+		document.getElementById('listprov').appendChild(row);
+	}
+	</script>
+</body>
