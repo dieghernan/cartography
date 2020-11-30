@@ -39,7 +39,7 @@ getPngLayer <-  function(x, pngpath, align = "center", margin = 0, crop = FALSE,
   }
   crs <- sf::st_crs(x)$proj4string
   if (file.exists(pngpath)) {
-    pngRB <- raster::brick(png::readPNG(pngpath) * 255, crs = crs)
+    pngRB <- png::readPNG(pngpath) * 255
   } else {
     # Download
     dirfile <- tempfile(fileext = ".png")
@@ -48,14 +48,27 @@ getPngLayer <-  function(x, pngpath, align = "center", margin = 0, crop = FALSE,
     } else if (dwmode == "curl") {
       curl::curl_download(pngpath, dirfile, ...)
     }
-    pngRB <- raster::brick(png::readPNG(dirfile) * 255, crs = crs)
+    pngRB <- png::readPNG(dirfile) * 255
   }
   
   if (!align %in% c("left", "right", "center", "top", "bottom")) {
     stop("align should be 'left','right','top', 'bottom' or 'center'")
   }
   
+  # Adding transparency
+  if (dim(pngRB)[3] == 4) {
+    nrow <- dim(pngRB)[1]
+    
+    for (j in seq_len(nrow)) {
+      row <- pngRB[j, ,]
+      alpha <- row[, 4] == 0
+      row[alpha,] <- NA
+      pngRB[j, ,] <- row
+    }
+  }
+  
   #Geotagging the raster
+  pngRB <- raster::brick(pngRB, crs = crs)
   
   #Add margin
   extshpinit <- raster::extent(x)
