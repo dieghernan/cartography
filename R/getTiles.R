@@ -218,6 +218,18 @@ compose_tile_grid <- function (tile_grid, images){
     # special for png tiles
     if (tile_grid$ext=="png"){
       img <- png::readPNG(img)*255
+      
+      # Give transparency if available
+      if (dim(img)[3] == 4) {
+        nrow <- dim(img)[1]
+        
+        for (j in seq_len(nrow)) {
+          row <- img[j, , ]
+          alpha <- row[, 4] == 0
+          row[alpha, ] <- NA
+          img[j, , ] <- row
+        }
+      }
     }
 
     # compose brick raster
