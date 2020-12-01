@@ -33,7 +33,7 @@ FALSE otherwise. If x is an sf object with one POINT, crop is set to FALSE.}
 
 \item{verbose}{if TRUE, tiles filepaths, zoom level and citation are displayed.}
 
-\item{apikey}{Needed for Thunderforest maps.}
+\item{apikey}{Needed for Thunderforest and Jawg maps.}
 
 \item{cachedir}{name of a directory used to cache tiles. If TRUE, places a 
 'tile.cache' folder in the working directory. If FALSE, tiles are not cached.}
@@ -74,6 +74,19 @@ Full list of providers:
 'CartoDB.VoyagerNoLabels'                  \tab  'Thunderforest.Pioneer'                     \tab  'OpenTopoMap' (or 'opentopomap') \cr
 'CartoDB.VoyagerOnlyLabels'                \tab  'Thunderforest.MobileAtlas'                 \tab  'Wikimedia'\cr
 'CartoDB.VoyagerLabelsUnder'               \tab  'Thunderforest.Neighbourhood'               \tab  'OpenStreetMap.MapnikBW' (or 'osmgrayscale')\cr
+'OpenStreetMap.CH'                         \tab 'Jawg.Streets'                               \tab 'Stadia.AlidadeSmooth'\cr
+'OpenStreetMap.BZH'                        \tab 'Jawg.Terrain'                               \tab 'BasemapAT.basemap'\cr
+'OpenSeaMap'                               \tab 'Jawg.Sunny'                                 \tab 'BasemapAT.grau'\cr
+'OpenPtMap'                                \tab 'Jawg.Dark'                                  \tab 'BasemapAT.overlay'\cr
+'OpenRailwayMap'                           \tab 'Jawg.Light'                                 \tab 'BasemapAT.terrain'\cr
+'USGS'                                     \tab 'Jawg.Matrix'                                \tab 'BasemapAT.surface'\cr
+'USGS.USTopo'                              \tab 'WaymarkedTrails.hiking'                     \tab 'BasemapAT.highdpi'\cr
+'USGS.USImagery'                           \tab 'WaymarkedTrails.cycling'                    \tab 'BasemapAT.orthofoto'\cr
+'USGS.USImageryTopo'                       \tab 'WaymarkedTrails.mtb'                        \tab 'nlmaps.standaard'\cr
+'Esri.WorldPhysical'                       \tab 'WaymarkedTrails.slopes'                     \tab 'nlmaps.pastel'\cr
+'FreeMapSK'                                \tab 'WaymarkedTrails.riding'                     \tab 'nlmaps.grijs'\cr
+'MtbMap'                                   \tab 'WaymarkedTrails.skating'                    \tab 'NLS'\cr
+'SafeCast'                                 \tab 'CyclOSM'                                    \tab \cr
 }
 }
 \examples{

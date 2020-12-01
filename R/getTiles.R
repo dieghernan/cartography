@@ -12,7 +12,7 @@
 #' @param crop TRUE if results should be cropped to the specified x extent, 
 #' FALSE otherwise. If x is an sf object with one POINT, crop is set to FALSE. 
 #' @param verbose if TRUE, tiles filepaths, zoom level and citation are displayed. 
-#' @param apikey Needed for Thunderforest maps.
+#' @param apikey Needed for Thunderforest and Jawg maps.
 #' @param cachedir name of a directory used to cache tiles. If TRUE, places a 
 #' 'tile.cache' folder in the working directory. If FALSE, tiles are not cached.
 #' @param forceDownload if TRUE, cached tiles are downloaded again. 
@@ -43,6 +43,19 @@
 #' 'CartoDB.VoyagerNoLabels'                  \tab  'Thunderforest.Pioneer'                     \tab  'OpenTopoMap' (or 'opentopomap') \cr
 #' 'CartoDB.VoyagerOnlyLabels'                \tab  'Thunderforest.MobileAtlas'                 \tab  'Wikimedia'\cr
 #' 'CartoDB.VoyagerLabelsUnder'               \tab  'Thunderforest.Neighbourhood'               \tab  'OpenStreetMap.MapnikBW' (or 'osmgrayscale')\cr
+#' 'OpenStreetMap.CH'                         \tab 'Jawg.Streets'                               \tab 'Stadia.AlidadeSmooth'\cr
+#' 'OpenStreetMap.BZH'                        \tab 'Jawg.Terrain'                               \tab 'BasemapAT.basemap'\cr
+#' 'OpenSeaMap'                               \tab 'Jawg.Sunny'                                 \tab 'BasemapAT.grau'\cr
+#' 'OpenPtMap'                                \tab 'Jawg.Dark'                                  \tab 'BasemapAT.overlay'\cr
+#' 'OpenRailwayMap'                           \tab 'Jawg.Light'                                 \tab 'BasemapAT.terrain'\cr
+#' 'USGS'                                     \tab 'Jawg.Matrix'                                \tab 'BasemapAT.surface'\cr
+#' 'USGS.USTopo'                              \tab 'WaymarkedTrails.hiking'                     \tab 'BasemapAT.highdpi'\cr
+#' 'USGS.USImagery'                           \tab 'WaymarkedTrails.cycling'                    \tab 'BasemapAT.orthofoto'\cr
+#' 'USGS.USImageryTopo'                       \tab 'WaymarkedTrails.mtb'                        \tab 'nlmaps.standaard'\cr
+#' 'Esri.WorldPhysical'                       \tab 'WaymarkedTrails.slopes'                     \tab 'nlmaps.pastel'\cr
+#' 'FreeMapSK'                                \tab 'WaymarkedTrails.riding'                     \tab 'nlmaps.grijs'\cr
+#' 'MtbMap'                                   \tab 'WaymarkedTrails.skating'                    \tab 'NLS'\cr
+#' 'SafeCast'                                 \tab 'CyclOSM'                                    \tab \cr
 #' }
 #' @references \url{https://leaflet-extras.github.io/leaflet-providers/preview/}
 #' @export
@@ -127,7 +140,14 @@ getTiles <- function(x, spdf, type = "OpenStreetMap", zoom = NULL, crop = FALSE,
     ext="jpg"
   } else if (length(grep("png",param$q))>0){
     ext="png"
+  } else if (length(grep("jpeg",param$q))>0){
+    ext="jpeg"
   }
+  # Overwrite if declared
+  if ("ext" %in% names(param)) {
+    ext = param$ext
+  }
+  
   tile_grid$ext<-ext
   #tile_grid$ext <- substr(param$q, nchar(param$q)-2, nchar(param$q))
   
@@ -622,6 +642,247 @@ get_param <- function(type) {
         q = "https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=XXXXXX",
         sub = NA,
         cit = "Maps \u00A9 www.thunderforest.com, Data \u00A9 www.osm.org/copyright"
+      ),
+      # New providers
+      OpenStreetMap.CH = list(
+        src = "OpenStreetMap.CH",
+        q = "https://tile.osm.ch/switzerland/{z}/{x}/{y}.png",
+        sub = NA,
+        cit = "\u00A9 OpenStreetMap contributors"
+      ),
+      OpenStreetMap.BZH = list(
+        src = "OpenStreetMap.BZH",
+        q = "https://tile.openstreetmap.bzh/br/{z}/{x}/{y}.png",
+        sub = NA,
+        cit = "\u00A9 OpenStreetMap, Tiles courtesy of Breton OpenStreetMap Team"
+      ),
+      OpenSeaMap = list(
+        src = "OpenSeaMap",
+        q = "https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",
+        sub = NA,
+        cit = "Map data: \u00A9 OpenSeaMap contributors"
+      ),
+      OpenPtMap = list(
+        src = "OpenPtMap",
+        q = "http://openptmap.org/tiles/{z}/{x}/{y}.png",
+        sub = NA,
+        cit = "Map data: \u00A9 OpenPtMap contributors"
+      ),
+      OpenRailwayMap =  list(
+        src = "OpenRailwayMap",
+        sub = c("a", "b", "c"),
+        q = "https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png",
+        cit = "Map data: \u00A9 OpenStreetMap contributors | Map style: \u00A9 OpenRailwayMap (CC-BY-SA)"
+      ),
+      SafeCast =  list(
+        src = "SafeCast",
+        sub = NA,
+        q = "https://s3.amazonaws.com/te512.safecast.org/{z}/{x}/{y}.png",
+        cit = "Map data: \u00A9 OpenStreetMap contributors | Map style: \u00A9 SafeCast (CC-BY-SA)"
+      ),
+      Stadia.AlidadeSmooth =  list(
+        src = "Stadia.AlidadeSmooth",
+        sub = NA,
+        q = "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png",
+        cit = "\u00A9 Stadia Maps, \u00A9 OpenMapTiles \u00A9 OpenStreetMap contributors"
+      ),
+      CyclOSM =  list(
+        src = "CyclOSM",
+        sub = c("a", "b", "c"),
+        q = "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
+        cit = "CyclOSM | Map data: \u00A9 OpenStreetMap contributors"
+      ),
+      
+      Jawg.Streets =  list(
+        src = "Jawg.Streets",
+        sub = c("a", "b", "c", "d"),
+        q = "https://{s}.tile.jawg.io/jawg-streets/{z}/{x}/{y}.png?access-token=XXXXXX",
+        cit = "\u00A9 JawgMaps \u00A9 OpenStreetMap contributors"
+      ),
+      Jawg.Terrain =  list(
+        src = "Jawg.Terrain",
+        sub = c("a", "b", "c", "d"),
+        q = "https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}.png?access-token=XXXXXX",
+        cit = "\u00A9 JawgMaps \u00A9 OpenStreetMap contributors"
+      ),
+      Jawg.Sunny =  list(
+        src = "Jawg.Sunny",
+        sub = c("a", "b", "c", "d"),
+        q = "https://{s}.tile.jawg.io/jawg-sunny/{z}/{x}/{y}.png?access-token=XXXXXX",
+        cit = "\u00A9 JawgMaps \u00A9 OpenStreetMap contributors"
+      ),
+      Jawg.Dark =  list(
+        src = "Jawg.Dark",
+        sub = c("a", "b", "c", "d"),
+        q = "https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}.png?access-token=XXXXXX",
+        cit = "\u00A9 JawgMaps \u00A9 OpenStreetMap contributors"
+      ),
+      Jawg.Light =  list(
+        src = "Jawg.Light",
+        sub = c("a", "b", "c", "d"),
+        q = "https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}.png?access-token=XXXXXX",
+        cit = "\u00A9 JawgMaps \u00A9 OpenStreetMap contributors"
+      ),
+      Jawg.Matrix =  list(
+        src = "Jawg.Matrix",
+        sub = c("a", "b", "c", "d"),
+        q = "https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}.png?access-token=XXXXXX",
+        cit = "\u00A9 JawgMaps \u00A9 OpenStreetMap contributors"
+      ),
+      Esri.WorldPhysical =  list(
+        src = "Esri.WorldPhysical",
+        sub = NA,
+        q = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}",
+        cit = "Tiles \u00A9 Esri \u2014 Source: US National Park Service",
+        ext = "jpeg"
+      ),
+      FreeMapSK =  list(
+        src = "FreeMapSK",
+        sub = c("a", "b", "c", "d"),
+        q = "https://{s}.freemap.sk/T/{z}/{x}/{y}.jpeg",
+        cit = "\u00A9 OpenStreetMap contributors, vizualization CC-By-SA 2.0 Freemap.sk",
+        ext = "jpeg"
+      ),
+      MtbMap =  list(
+        src = "MtbMap",
+        sub = NA,
+        q = "http://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png",
+        cit = "\u00A9 OpenStreetMap contributors & USGS"
+      ),
+      BasemapAT.basemap =  list(
+        src = "BasemapAT.basemap",
+        sub = c("", "1", "2", "3", "4"),
+        q = "https://maps{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png",
+        cit = "Datenquelle: basemap.at"
+      ),
+      
+      BasemapAT.grau =  list(
+        src = "BasemapAT.grau",
+        sub = c("", "1", "2", "3", "4"),
+        q = "https://maps{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png",
+        cit = "Datenquelle: basemap.at"
+      ),
+      BasemapAT.overlay =  list(
+        src = "BasemapAT.overlay",
+        sub = c("", "1", "2", "3", "4"),
+        q = "https://maps{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png",
+        cit = "Datenquelle: basemap.at"
+      ),
+      BasemapAT.terrain =  list(
+        src = "BasemapAT.terrain",
+        sub = c("", "1", "2", "3", "4"),
+        q = "https://maps{s}.wien.gv.at/basemap/bmapgelaende/grau/google3857/{z}/{y}/{x}.jpeg",
+        cit = "Datenquelle: basemap.at",
+        ext = "jpeg"
+      ),
+      BasemapAT.surface =  list(
+        src = "BasemapAT.surface",
+        sub = c("", "1", "2", "3", "4"),
+        q = "https://maps{s}.wien.gv.at/basemap/bmapoberflaeche/grau/google3857/{z}/{y}/{x}.jpeg",
+        cit = "Datenquelle: basemap.at",
+        ext = "jpeg"
+      ),
+      BasemapAT.highdpi =  list(
+        src = "BasemapAT.highdpi",
+        sub = c("", "1", "2", "3", "4"),
+        q = "https://maps{s}.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg",
+        cit = "Datenquelle: basemap.at",
+        ext = "jpeg"
+      ),
+      BasemapAT.orthofoto =  list(
+        src = "BasemapAT.orthofoto",
+        sub = c("", "1", "2", "3", "4"),
+        q = "https://maps{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg",
+        cit = "Datenquelle: basemap.at",
+        ext = "jpeg"
+      ),
+      nlmaps.standaard =  list(
+        src = "nlmaps.standaard",
+        sub = NA,
+        q = "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaart/EPSG:3857/{z}/{x}/{y}.png",
+        cit = "Kaartgegevens \u00A9 Kadaster"
+      ),
+      nlmaps.pastel =  list(
+        src = "nlmaps.pastel",
+        sub = NA,
+        q = "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartpastel/EPSG:3857/{z}/{x}/{y}.png",
+        cit = "Kaartgegevens \u00A9 Kadaster"
+      ),
+      nlmaps.grijs =  list(
+        src = "nlmaps.grijs",
+        sub = NA,
+        q = "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartgrijs/EPSG:3857/{z}/{x}/{y}.png",
+        cit = "Kaartgegevens \u00A9 Kadaster"
+      ),
+      NLS =  list(
+        src = "NLS",
+        sub = c("0", "1", "2", "3"),
+        q = "https://nls-{s}.tileserver.com/nls/{z}/{x}/{y}.jpg",
+        cit = "National Library of Scotland Historic Maps"
+      ),
+      USGS =  list(
+        src = "USGS",
+        sub = NA,
+        q = "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
+        cit = "Tiles courtesy of the U.S. Geological Survey",
+        ext = "jpeg"
+      ),
+      USGS.USTopo =  list(
+        src = "USGS.USTopo",
+        sub = NA,
+        q = "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
+        cit = "Tiles courtesy of the U.S. Geological Survey",
+        ext = "jpeg"
+      ),
+      USGS.USImagery =  list(
+        src = "USGS.USImagery",
+        sub = NA,
+        q = "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}",
+        cit = "Tiles courtesy of the U.S. Geological Survey",
+        ext = "jpeg"
+      ),
+      USGS.USImageryTopo =  list(
+        src = "USGS.USImageryTopo",
+        sub = NA,
+        q = "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}",
+        cit = "Tiles courtesy of the U.S. Geological Survey",
+        ext = "jpeg"
+      ),
+      WaymarkedTrails.hiking =  list(
+        src = "WaymarkedTrails.hiking",
+        sub = NA,
+        q = "https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png",
+        cit = "Map data: \u00A9 OpenStreetMap contributors | Map style: \u00A9 waymarkedtrails.org (CC-BY-SA)"
+      ),
+      WaymarkedTrails.cycling =  list(
+        src = "WaymarkedTrails.cycling",
+        sub = NA,
+        q = "https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png",
+        cit = "Map data: \u00A9 OpenStreetMap contributors | Map style: \u00A9 waymarkedtrails.org (CC-BY-SA)"
+      ),
+      WaymarkedTrails.mtb =  list(
+        src = "WaymarkedTrails.mtb",
+        sub = NA,
+        q = "https://tile.waymarkedtrails.org/mtb/{z}/{x}/{y}.png",
+        cit = "Map data: \u00A9 OpenStreetMap contributors | Map style: \u00A9 waymarkedtrails.org (CC-BY-SA)"
+      ),
+      WaymarkedTrails.slopes =  list(
+        src = "WaymarkedTrails.slopes",
+        sub = NA,
+        q = "https://tile.waymarkedtrails.org/slopes/{z}/{x}/{y}.png",
+        cit = "Map data: \u00A9 OpenStreetMap contributors | Map style: \u00A9 waymarkedtrails.org (CC-BY-SA)"
+      ),
+      WaymarkedTrails.riding =  list(
+        src = "WaymarkedTrails.riding",
+        sub = NA,
+        q = "https://tile.waymarkedtrails.org/riding/{z}/{x}/{y}.png",
+        cit = "Map data: \u00A9 OpenStreetMap contributors | Map style: \u00A9 waymarkedtrails.org (CC-BY-SA)"
+      ),
+      WaymarkedTrails.skating =  list(
+        src = "WaymarkedTrails.skating",
+        sub = NA,
+        q = "https://tile.waymarkedtrails.org/skating/{z}/{x}/{y}.png",
+        cit = "Map data: \u00A9 OpenStreetMap contributors | Map style: \u00A9 waymarkedtrails.org (CC-BY-SA)"
       )
     )
   }
