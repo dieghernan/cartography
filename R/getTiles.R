@@ -12,7 +12,7 @@
 #' @param crop TRUE if results should be cropped to the specified x extent, 
 #' FALSE otherwise. If x is an sf object with one POINT, crop is set to FALSE. 
 #' @param verbose if TRUE, tiles filepaths, zoom level and citation are displayed. 
-#' @param apikey Needed for Thunderforest and Jawg maps.
+#' @param apikey Needed for Thunderforest, Jawg and HEREv3 maps.
 #' @param cachedir name of a directory used to cache tiles. If TRUE, places a 
 #' 'tile.cache' folder in the working directory. If FALSE, tiles are not cached.
 #' @param forceDownload if TRUE, cached tiles are downloaded again. 

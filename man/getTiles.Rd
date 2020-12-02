@@ -33,7 +33,7 @@ FALSE otherwise. If x is an sf object with one POINT, crop is set to FALSE.}
 
 \item{verbose}{if TRUE, tiles filepaths, zoom level and citation are displayed.}
 
-\item{apikey}{Needed for Thunderforest and Jawg maps.}
+\item{apikey}{Needed for Thunder-forest, Jawg and HEREv3 maps.}
 
 \item{cachedir}{name of a directory used to cache tiles. If TRUE, places a 
 'tile.cache' folder in the working directory. If FALSE, tiles are not cached.}
