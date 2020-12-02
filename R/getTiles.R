@@ -56,6 +56,16 @@
 #' 'FreeMapSK'                                \tab 'WaymarkedTrails.riding'                     \tab 'nlmaps.grijs'\cr
 #' 'MtbMap'                                   \tab 'WaymarkedTrails.skating'                    \tab 'NLS'\cr
 #' 'SafeCast'                                 \tab 'CyclOSM'                                    \tab \cr
+#' HEREv3.normalDay'                          \tab 'HEREv3.normalNightGreyMobile'               \tab 'HEREv3.hybridDay'\cr
+#' HEREv3.normalDayCustom'                    \tab 'HEREv3.normalNightTransit'                  \tab 'HEREv3.hybridDayMobile'\cr
+#' HEREv3.normalDayGrey'                      \tab 'HEREv3.normalNightTransitMobile'            \tab 'HEREv3.hybridDayTransit'\cr
+#' HEREv3.normalDayMobile'                    \tab 'HEREv3.reducedDay'                          \tab 'HEREv3.hybridDayGrey'\cr
+#' HEREv3.normalDayGreyMobile'                \tab 'HEREv3.reducedNight'                        \tab 'HEREv3.pedestrianDay'\cr
+#' HEREv3.normalDayTransit'                   \tab 'HEREv3.basicMap'                            \tab 'HEREv3.pedestrianNight'\cr
+#' HEREv3.normalDayTransitMobile'             \tab 'HEREv3.mapLabels'                           \tab 'HEREv3.satelliteDay'\cr
+#' HEREv3.normalNight'                        \tab 'HEREv3.trafficFlow'                         \tab 'HEREv3.terrainDay'\cr
+#' HEREv3.normalNightMobile'                  \tab 'HEREv3.carnavDayGrey'                       \tab 'HEREv3.terrainDayMobile'\cr
+#' HEREv3.normalNightGrey'                    \tab                                              \tab \cr
 #' }
 #' @references \url{https://leaflet-extras.github.io/leaflet-providers/preview/}
 #' @export
@@ -883,6 +893,175 @@ get_param <- function(type) {
         sub = NA,
         q = "https://tile.waymarkedtrails.org/skating/{z}/{x}/{y}.png",
         cit = "Map data: \u00A9 OpenStreetMap contributors | Map style: \u00A9 waymarkedtrails.org (CC-BY-SA)"
+      ),
+      HEREv3.normalDay =  list(
+        src = "HEREv3.normalDay",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalDayCustom =  list(
+        src = "HEREv3.normalDayCustom",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day.custom/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalDayGrey =  list(
+        src = "HEREv3.normalDayGrey",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalDayMobile =  list(
+        src = "HEREv3.normalDayMobile",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day.mobile/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalDayGreyMobile =  list(
+        src = "HEREv3.normalDayGreyMobile",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day.grey.mobile/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalDayTransit =  list(
+        src = "HEREv3.normalDayTransit",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day.transit/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalDayTransitMobile =  list(
+        src = "HEREv3.normalDayTransitMobile",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day.transit.mobile/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalNight =  list(
+        src = "HEREv3.normalNight",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.night/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalNightMobile =  list(
+        src = "HEREv3.normalNightMobile",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.night.mobile/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalNightGrey =  list(
+        src = "HEREv3.normalNightGrey",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.night.grey/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalNightGreyMobile =  list(
+        src = "HEREv3.normalNightGreyMobile",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.night.grey.mobile/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalNightTransit =  list(
+        src = "HEREv3.normalNightTransit",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.night.transit/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.normalNightTransitMobile =  list(
+        src = "HEREv3.normalNightTransitMobile",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.night.transit.mobile/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.reducedDay =  list(
+        src = "HEREv3.reducedDay",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/reduced.day/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.reducedNight =  list(
+        src = "HEREv3.reducedNight",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/reduced.night/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.basicMap =  list(
+        src = "HEREv3.basicMap",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/basetile/newest/normal.day/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.mapLabels =  list(
+        src = "HEREv3.mapLabels",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/labeltile/newest/normal.day/{z}/{x}/{y}/256/png?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.trafficFlow =  list(
+        src = "HEREv3.trafficFlow",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.traffic.maps.ls.hereapi.com/maptile/2.1/flowtile/newest/normal.day/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.carnavDayGrey =  list(
+        src = "HEREv3.carnavDayGrey",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/carnav.day.grey/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.hybridDay =  list(
+        src = "HEREv3.hybridDay",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.aerial.maps.ls.hereapi.com/maptile/2.1/maptile/newest/hybrid.day/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.hybridDayMobile =  list(
+        src = "HEREv3.hybridDayMobile",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.aerial.maps.ls.hereapi.com/maptile/2.1/maptile/newest/hybrid.day.mobile/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.hybridDayTransit =  list(
+        src = "HEREv3.hybridDayTransit",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.aerial.maps.ls.hereapi.com/maptile/2.1/maptile/newest/hybrid.day.transit/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.hybridDayGrey =  list(
+        src = "HEREv3.hybridDayGrey",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.aerial.maps.ls.hereapi.com/maptile/2.1/maptile/newest/hybrid.grey.day/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.pedestrianDay =  list(
+        src = "HEREv3.pedestrianDay",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/pedestrian.day/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.pedestrianNight =  list(
+        src = "HEREv3.pedestrianNight",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/pedestrian.night/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.satelliteDay =  list(
+        src = "HEREv3.satelliteDay",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.aerial.maps.ls.hereapi.com/maptile/2.1/maptile/newest/satellite.day/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.terrainDay =  list(
+        src = "HEREv3.terrainDay",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.aerial.maps.ls.hereapi.com/maptile/2.1/maptile/newest/terrain.day/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
+      ),
+      HEREv3.terrainDayMobile =  list(
+        src = "HEREv3.terrainDayMobile",
+        sub = c("1", "2", "3", "4"),
+        q = "https://{s}.aerial.maps.ls.hereapi.com/maptile/2.1/maptile/newest/terrain.day.mobile/{z}/{x}/{y}/256/png8?apiKey=XXXXXX&lg=eng",
+        cit = "Map \u00A9 1987-2020 HERE"
       )
     )
   }

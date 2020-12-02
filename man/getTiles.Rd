@@ -87,6 +87,16 @@ Full list of providers:
 'FreeMapSK'                                \tab 'WaymarkedTrails.riding'                     \tab 'nlmaps.grijs'\cr
 'MtbMap'                                   \tab 'WaymarkedTrails.skating'                    \tab 'NLS'\cr
 'SafeCast'                                 \tab 'CyclOSM'                                    \tab \cr
+HEREv3.normalDay'                          \tab 'HEREv3.normalNightGreyMobile'               \tab 'HEREv3.hybridDay'\cr
+HEREv3.normalDayCustom'                    \tab 'HEREv3.normalNightTransit'                  \tab 'HEREv3.hybridDayMobile'\cr
+HEREv3.normalDayGrey'                      \tab 'HEREv3.normalNightTransitMobile'            \tab 'HEREv3.hybridDayTransit'\cr
+HEREv3.normalDayMobile'                    \tab 'HEREv3.reducedDay'                          \tab 'HEREv3.hybridDayGrey'\cr
+HEREv3.normalDayGreyMobile'                \tab 'HEREv3.reducedNight'                        \tab 'HEREv3.pedestrianDay'\cr
+HEREv3.normalDayTransit'                   \tab 'HEREv3.basicMap'                            \tab 'HEREv3.pedestrianNight'\cr
+HEREv3.normalDayTransitMobile'             \tab 'HEREv3.mapLabels'                           \tab 'HEREv3.satelliteDay'\cr
+HEREv3.normalNight'                        \tab 'HEREv3.trafficFlow'                         \tab 'HEREv3.terrainDay'\cr
+HEREv3.normalNightMobile'                  \tab 'HEREv3.carnavDayGrey'                       \tab 'HEREv3.terrainDayMobile'\cr
+HEREv3.normalNightGrey'                    \tab                                              \tab \cr
 }
 }
 \examples{
