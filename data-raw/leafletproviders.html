@@ -124,23 +124,32 @@
 		// keeping it in the options map doesn't make sense for one layer
 		if(options.variant) {
 			url = url.replace('{variant}', options.variant);
-			delete options.variant;
+			//delete options.variant;
 		}
 		if (options.subdomains){
 		
 		} else {
 		  options.subdomains = "NA"
 		}
+
 		row = document.createElement('tr');
 		row.innerHTML = '<td><code>' + name + '</code></td><td>src</td><td>"' + name + '"</td>';
 		
 		document.getElementById('listprov').appendChild(row);
 		for(var optionfinal in options) {
 			opt = optionfinal;
+			console.log(opt);
 			if(opt == "subdomains") {			
 				
 				row = document.createElement('tr');
 				row.innerHTML = '<td><code>' + name + '</code></td><td>sub</td><td>"' + options[optionfinal] + '"</td>';
+				document.getElementById('listprov').appendChild(row);
+			}
+			
+			if(opt == "variant") {			
+				
+				row = document.createElement('tr');
+				row.innerHTML = '<td><code>' + name + '</code></td><td>variant</td><td>"' + options[optionfinal] + '"</td>';
 				document.getElementById('listprov').appendChild(row);
 			}
 		}
